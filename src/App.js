@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import C01componente from './componentes/C01componente';
+import Appform from './componentes/Appform';
 
 function App() {
   return (
-    <div>
-      <C01componente/>
+    <div style={{background:"yellow", width:"350px", padding:"10px"}}>
+      <Appform/>
     </div>
   );
 }
