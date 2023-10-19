@@ -7,6 +7,7 @@ function App() {
   return (
     <div style={{background:"yellow", width:"350px", padding:"10px"}}>
       <Appform/>
+      <i class="large material-icons">insert_chart</i>
     </div>
   );
 }
