@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/YulianaAA26/reactyuli.git/static/css/main.7c1c4a72.css",
-    "main.js": "/YulianaAA26/reactyuli.git/static/js/main.807174bf.js",
-    "static/js/787.cc4e593a.chunk.js": "/YulianaAA26/reactyuli.git/static/js/787.cc4e593a.chunk.js",
-    "static/media/logo.svg": "/YulianaAA26/reactyuli.git/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/YulianaAA26/reactyuli.git/index.html",
-    "main.7c1c4a72.css.map": "/YulianaAA26/reactyuli.git/static/css/main.7c1c4a72.css.map",
-    "main.807174bf.js.map": "/YulianaAA26/reactyuli.git/static/js/main.807174bf.js.map",
-    "787.cc4e593a.chunk.js.map": "/YulianaAA26/reactyuli.git/static/js/787.cc4e593a.chunk.js.map"
+    "main.css": "/reactyuli/static/css/main.7c1c4a72.css",
+    "main.js": "/reactyuli/static/js/main.b1569d77.js",
+    "static/js/787.cc4e593a.chunk.js": "/reactyuli/static/js/787.cc4e593a.chunk.js",
+    "static/media/logo.svg": "/reactyuli/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/reactyuli/index.html",
+    "main.7c1c4a72.css.map": "/reactyuli/static/css/main.7c1c4a72.css.map",
+    "main.b1569d77.js.map": "/reactyuli/static/js/main.b1569d77.js.map",
+    "787.cc4e593a.chunk.js.map": "/reactyuli/static/js/787.cc4e593a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7c1c4a72.css",
-    "static/js/main.807174bf.js"
+    "static/js/main.b1569d77.js"
   ]
 }
