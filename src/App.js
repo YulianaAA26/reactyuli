@@ -1,14 +1,40 @@
 //import logo from './logo.svg';
 //import './App.css';
-import {useState} from 'react';
+
+import { collection, getDocs, query, doc, deleteDoc, where, onSnapshot } from 'firebase/firestore';
+import {useEffect, useState} from "react"; 
 import Appform from './componentes/Appform';
+import {db} from './Firebase/firebase';
 
 function App() {
 ///READ - LECTURA - fnread ///
   const [docBD,setDocBD] = useState([]);
+  
   const fnread = () => {
-    
+    try {
+      const xColeccionConQuery = query(collection(db, "persona"));
+      
+      const unsubscribe = onSnapshot(xColeccionConQuery, (xDatosBD) => {
+        const xDoc = [];
+        xDatosBD.forEach( (doc) => {
+         
+          xDoc.push({id: doc.id,  ...doc.data()});
+         
+        });
+        
+        setDocBD(xDoc);
+        
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
+  
+  useEffect( () => {
+    fnread();
+  }, []);
+
+
 
 /// DELETE - eliminar - fnDelete ///
   const [idActual,setIdActual] = useState("");
