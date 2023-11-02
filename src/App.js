@@ -8,9 +8,9 @@ import {db} from './Firebase/firebase';
 
 function App() {
 ///READ - LECTURA - fnread ///
-  const [docBD,setDocBD] = useState([]);
+  const [docsBD,setDocBD] = useState([]);
   
-  const fnread = () => {
+  const fnRead = () => {
     try {
       const xColeccionConQuery = query(collection(db, "persona"));
       
@@ -31,24 +31,36 @@ function App() {
   }
   
   useEffect( () => {
-    fnread();
+    fnRead();
   }, []);
 
 
 
 /// DELETE - eliminar - fnDelete ///
   const [idActual,setIdActual] = useState("");
-  const fnDelete = (xId) => {
-
+  const fnDelete = async(xId) => {
+      if(window.confirm("Confirme para eliminar")){
+        await deleteDoc(doc(db, 'persona', xId));
+        console.log("Se elimino... "+xId);
+      }
   }
 
    /// const camposRegistros = {nombre:"", edad:"", genero:""}///
   return (
     <div style={{background:"yellow", width:"350px", padding:"10px"}}>
-      <Appform {...{idActual}}/>
-      <p>1. Jose Manuel  28 Masculino  ----x - A</p>
-      <p>2. Shirley Beatriz  31 Femenino  ----x - A</p>
-      <p>3. Edgar Junior 25 Masculino  ----x - A</p>
+      <h1>reactYuli (app.js)</h1>
+      <h3>READ / DELETE</h3>
+      <Appform {...{idActual, setIdActual, fnRead}}/>
+      {
+        docsBD.map((p, index) =>
+        <p key={p.id}>
+          {index+1}{p.nombre} ...
+          <span onClick={() => fnDelete(p.id)}> X </span>
+          ...
+          <span onClick={() => setIdActual(p.id)}> A </span>
+        </p>)
+      }
+      
     </div>
   );
 }
