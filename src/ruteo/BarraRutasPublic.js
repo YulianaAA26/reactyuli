@@ -25,7 +25,7 @@ const BarraRutasPublic = () => {
             <ul>
               <li><Link to="/nuevoregistro">Registrar</Link></li>
   
-              <li><Link onClick={handleSignOut} >ar sesión</Link> </li>
+              <li><Link onClick={handleSignOut} >Cerrar sesión</Link> </li>
               <li> <Link to="/iniciarsesion">Iniciar sesión</Link> </li>
               
             </ul>

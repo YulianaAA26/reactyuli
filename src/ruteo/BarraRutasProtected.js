@@ -26,10 +26,20 @@ const BarraRutasProtected = () => {
     const navigate = useNavigate();
   
     const handleSignOut = () => {
+      if (user) {
+        signOut(auth)
+          .then(() => {
+            // Cierre de sesión exitoso
+            navigate('/home'); // Redirigir a ruta /home
+          })
+          .catch((error) => {
+            console.error('Error al ar sesión:', error);
+          });
+      }
     }
-  
+  // style={{ background:"royalblue", padding:"10px" }}
     return (
-      <div style={{ background:"royalblue", padding:"10px" }}>
+      <div>
         <nav>
           <div id="login">
             <ul>
@@ -74,8 +84,9 @@ const BarraRutasProtected = () => {
 export default BarraRutasProtected;
 
 function MarcoParaSistemaCRUD() {
-    return (
-      <div style={{background:"cornflowerblue", padding:"10px"}}>
+   // style={{background:"cornflowerblue", padding:"10px"}}
+  return (
+      <div>
         <h1>Marco sistema CRUD</h1>
         < Outlet /> {/* Aquí se mostrarán las rutas secundarias */}
       </div>
@@ -95,7 +106,7 @@ function MarcoParaSistemaFILE() {
 
   
 
-  
+/*  
                 {user ? (         ////////  Para ar sesión   ///////////
                 <li><Link onClick={handleSignOut} > Cerrar sesión </Link> </li> 
                 ) : (
@@ -109,11 +120,11 @@ function MarcoParaSistemaFILE() {
                 ) : (
                 null
               )}
+  */
   
   
   
-  
-  
+  /*
   
   const handleSignOut = () => {
       if (user) {
@@ -127,4 +138,4 @@ function MarcoParaSistemaFILE() {
           });
       }
     }
-  
+  */

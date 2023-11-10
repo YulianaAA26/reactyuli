@@ -33,27 +33,43 @@ function LoginForm() {
   return (
     <div id='public'>
       <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSignIn}>
-        <div>
-          <label>Email:</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+
+      <form className='card card-body' onSubmit={handleSignIn}>
+
+        <div className='form-group input-group'>
+          <div className='input-group-text bd-light'>
+          <i className='material-icons'>group_add</i>
         </div>
-        <div>
-          <label>Contraseña:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input className='form-control float-start' placeholder='Usuario...'  
+          type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Iniciar Sesión</button>
-      </form>
-    </div>
+
+        <div className='form-group input-group'>
+          <div className='input-group-text bd-light'>
+          <i className='material-icons'>star_half</i>
+        </div>
+
+        <input className='form-control float-start' placeholder='Contraseña...'  
+          type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+        </div>
+
+      <button className='btn btn-primary btn-block'>
+        Iniciar Sesion
+        {error && <p style={{ color: 'green' }}>{error}</p>}
+        
+      </button>
+
+    </form>
+    
+  </div>
   );
 }
 
 export default LoginForm;
 
 
-/*
-const handleSignIn = async (e) => {
+
+/*const handleSignIn = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
