@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import 'bootswatch/dist/solar/bootstrap.min.css'
 import { AuthProvider } from './ruteo/AuthContext';
 
@@ -13,6 +12,7 @@ root.render(
     <AuthProvider>
       <App />
     </AuthProvider>
+    
   </React.StrictMode>
 );
 

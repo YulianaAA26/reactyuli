@@ -47,7 +47,7 @@ function App() {
 
    /// const camposRegistros = {nombre:"", edad:"", genero:""}///
   return (
-    <div style={{background:"yellow", width:"350px", padding:"10px"}}>
+    <div style={{background:"violet", width:"350px", padding:"10px"}}>
       <h1>reactYuli (app.js)</h1>
       <h3>READ / DELETE</h3>
       <Appform {...{idActual, setIdActual, fnRead}}/>

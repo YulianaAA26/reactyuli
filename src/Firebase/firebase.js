@@ -1,6 +1,6 @@
 /*
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { inicializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 import { getAuth} from "firebase/auth";
@@ -22,8 +22,8 @@ const firebaseConfig = {
   measurementId: "G-V1NN9187C7"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+//Initialize Firebase
+const app = inicializeApp(firebaseConfig);
 const analytics = getAnalytics (app);
 
 const auth = getAuth(app);
