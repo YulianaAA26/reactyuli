@@ -2,18 +2,18 @@ nav ul {display: inline; list-style: none; }
 nav li {padding-right: 10px;}
 #login, #menu {padding: 10px;}
 
-#login{ background: rgb(255, 251, 251); }
+#login{ background: rgb(255, 255, 255); }
 #login ul li{float: inline-end;}
 
 #menu{background: rgb(255, 255, 255)}
 #menu ul li{float: inline-start;}
 
-#sis {background: rgb(205, 50, 122);}
+#sis {background: rgb(255, 230, 0);}
 
-#file {background: rgb(247, 218, 57)}  /* mediumorchid; darkgreen*/
+#file {background: rgb(145, 255, 0)}  /* mediumorchid; darkgreen*/
 
-#public { background:  rgb(73, 206, 240); }
+#public { background:  rgb(255, 0, 212); }
 
 @media (max-width: 600px){
-  #login, #menu{display: white; }
+  #login, #menu{display: grid; }
 }

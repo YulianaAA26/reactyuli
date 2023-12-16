@@ -4,7 +4,7 @@ const ListaDeCursos = () => {
   return (
     <div id="sis">
       <h1>ListaDeCursos</h1>
-      Lista de ListaDeCursos...
+      Lista De Cursos...
     </div>
   )
 }

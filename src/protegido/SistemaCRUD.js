@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 const SistemaCRUD = () => {
   return (
-    <div id="sis">
+    <div id="sis" style={{ background:"#80BFFF", }}>
       <h1>SistemaCRUD</h1>
       <Outlet /> {/* Donde se renderizarán las rutas secundarias */}
       Sistema con operaciones CRUD en BD (Firestore)...

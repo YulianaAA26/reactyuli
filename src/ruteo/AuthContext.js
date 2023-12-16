@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
   
-  // (5) Def. funciones: iniciar, ar, registrar usuarios, etc.
+  // (5) Def. funciones: iniciar, cerrar, registrar usuarios, etc.
   const signIn = async (email, password) => {     //Iniciar sesión
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -42,12 +42,12 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const signOut = async () => {                   //ar sesión
+  const signOut = async () => {                   //Cerrar sesión
     try {
       await signIn();
-      console.log('ar sesión:');
+      console.log('Cerrar sesión:');
     } catch (error) {
-      console.error('Error al ar sesión:', error.message);
+      console.error('Error al cerrar sesión:', error.message);
     }
   };
 

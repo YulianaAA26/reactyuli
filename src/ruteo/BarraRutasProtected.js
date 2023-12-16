@@ -7,18 +7,27 @@ import { getAuth, signOut } from 'firebase/auth';
 import "./BarraNavegacion.css";
 import { useNavigate } from 'react-router-dom';
 
-///////////////// PROTEGIDA - SistemaCRUD //////////////
+////////////////////// PROTEGIDA - SistemaCRUD ////////////// 
 import SistemaCRUD from '../protegido/SistemaCRUD';
 import ListaDeAlumnos from '../protegido/sistemacrud/ListaDeAlumnos';
 
 ///////////////// PROTEGIDA - SistemaFILE //////////////
 import SistemaFILE from '../protegido/SistemaFILE';
 import Fotos from '../protegido/sistemafile/Fotos';
+import Archivopdf from '../protegido/sistemafile/Pdf';
+import Archivoword from '../protegido/sistemafile/Word';
+import Videos from '../protegido/sistemafile/Videos';
+
+//import PDF from '../protegido/sistemafile/PDF';
 
 //////////////////////// PAG. PUBLICOS /////////////////
 import RegisterForm from '../login/RegisterForm';
 import LoginForm from '../login/LoginForm';
 import AppLista from '../protegido/sistemacrud/AppLista';
+import ListaDeProfesores from '../protegido/sistemacrud/ListaDeProfesores';
+import Deportes from '../protegido/sistemacrud/Deportes';
+import Carreras from '../protegido/sistemacrud/Carreras';
+import Egresados from '../protegido/sistemacrud/Egresados';
 
 const BarraRutasProtected = () => {
     const { user } = useAuth();
@@ -33,13 +42,13 @@ const BarraRutasProtected = () => {
             navigate('/home'); // Redirigir a ruta /home
           })
           .catch((error) => {
-            console.error('Error al ar sesión:', error);
+            console.error('Error al cerrar sesión:', error);
           });
       }
     }
-  // style={{ background:"royalblue", padding:"10px" }}
+  
     return (
-      <div>
+      <div style={{ background:"royalblue", padding:"10px" }}>
         <nav>
           <div id="login">
             <ul>
@@ -52,9 +61,15 @@ const BarraRutasProtected = () => {
               
           <div id="menu">
             <ul>
-              <li><Link to="/sistema-crud/applista">Alumnos App.Lista</Link> </li>
-                      
+              <li><Link to="/sistema-crud/carreras">Carreras </Link> </li>
+              <li><Link to="/sistema-crud/deportes">Deportes </Link> </li>
+              <li><Link to="/sistema-crud/egresados">Egresados </Link> </li>
+              <li><Link to="/sistema-crud/applista">Alumnos (AppLista)</Link> </li>
+              
+              <li><Link to="/sistema-file/videos">Videos</Link> </li>
               <li><Link to="/sistema-file/fotos">Fotos</Link> </li>
+              <li><Link to="/sistema-file/pdf">PDF</Link> </li>
+              <li><Link to="/sistema-file/word">Word</Link> </li>
             </ul>
           </div>
         </nav>
@@ -68,12 +83,18 @@ const BarraRutasProtected = () => {
           <Route path="/sistema-crud" element={<MarcoParaSistemaCRUD />}>
             <Route index element={<SistemaCRUD />} />
             <Route path="applista" element={<AppLista />} />
+            <Route path="egresados" element={<Egresados />} />
+            <Route path="deportes" element={<Deportes />} />
+            <Route path="carreras" element={<Carreras />} />
           </Route>
   
   
           <Route path="/sistema-file" element={<MarcoParaSistemaFILE />}>
             <Route index element={<SistemaFILE />} />
             <Route path="fotos" element={<Fotos />} />
+            <Route path="pdf" element={<Archivopdf />} />
+            <Route path="videos" element={<Videos />} />
+            <Route path="word" element={<Archivoword />} />
           </Route>
   
         </Routes>        
@@ -84,9 +105,8 @@ const BarraRutasProtected = () => {
 export default BarraRutasProtected;
 
 function MarcoParaSistemaCRUD() {
-   // style={{background:"cornflowerblue", padding:"10px"}}
-  return (
-      <div>
+    return (
+      <div style={{background:"cornflowerblue", padding:"10px"}}>
         <h1>Marco sistema CRUD</h1>
         < Outlet /> {/* Aquí se mostrarán las rutas secundarias */}
       </div>
@@ -102,12 +122,12 @@ function MarcoParaSistemaFILE() {
     );
 }
   
-
+ 
 
   
-
-/*  
-                {user ? (         ////////  Para ar sesión   ///////////
+  /*
+  
+                {user ? (         ////////  Para cerrar sesión   ///////////
                 <li><Link onClick={handleSignOut} > Cerrar sesión </Link> </li> 
                 ) : (
                 <li> <Link to="/iniciarsesion">Iniciar sesión</Link> </li>
@@ -120,12 +140,12 @@ function MarcoParaSistemaFILE() {
                 ) : (
                 null
               )}
-  */
-  
   
   
   /*
   
+  
+  /*
   const handleSignOut = () => {
       if (user) {
         signOut(auth)
@@ -134,8 +154,9 @@ function MarcoParaSistemaFILE() {
             navigate('/home'); // Redirigir a ruta /home
           })
           .catch((error) => {
-            console.error('Error al ar sesión:', error);
+            console.error('Error al cerrar sesión:', error);
           });
       }
     }
   */
+  

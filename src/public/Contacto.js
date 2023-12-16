@@ -2,9 +2,9 @@ import React from 'react'
 
 const Contacto = () => {
   return (
-    <div id="public">
+    <div id="public" style={{ background:"#80BFFF", }}>
       <h1>Contacto</h1>
-      Página de cotacto
+      Bienvenido a la página de contacto
     </div>
   )
 }

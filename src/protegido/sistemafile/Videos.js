@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+
 
 const Videos = () => {
   return (
-    <div id='file'>
+    <div id='file' style={{ background:"#D8AAE7", }}>
       <h1>Videos</h1>
-      Página para videos...
+       Pagina para los videos
     </div>
   )
 }

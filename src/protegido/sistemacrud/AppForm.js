@@ -1,155 +1,195 @@
 import React, { useEffect, useState } from 'react';
-import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../conexion/firebase';
-
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../conexion/firebase";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../../ruteo/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../../conexion/firebase';
-import { signOut } from 'firebase/auth';
 
-import { toast } from 'react-toastify';
+import { getAuth, signOut } from 'firebase/auth';
+
+
 
 const AppForm = (props) => {
 
+  const { user } = useAuth();
+  const auth = getAuth();
+  const navigate = useNavigate();
+ 
   ////////////////// MANEJAR INGRESO DE DATOS ///////////
-  const handleStatusChange = (e) => { //Manejar cambios
-    //console.log(e.target)        //obtiene camposRegistro (objeto)
-    //console.log(e.target.value)  //obtiene valor por cada tipeo
-    //console.log({name, value})   //obtiene (name:'nombre', value:'xx')
-    //console.log({...objeto, [name]:value})  //En Objeto se acumula c/t
-    const {name, value} = e.target;
-    setObjeto({...objeto, [name]:value});
+  const handleStatusChange = (e) => {
+    const {name, value} = e.target;       // Lectura a <input>
+    setObjeto({...objeto, [name]:value}); // Pasando name y value
+    //console.log({name, value});
     //console.log(objeto);
+  }
+
+
+  
+  const handleSignOut = () => {
+    if (user) {
+      signOut(auth)
+        .then(() => {
+          // Cierre de sesión exitoso
+          navigate('/home'); // Redirigir a ruta /home
+        })
+        .catch((error) => {
+          console.error('Error al cerrar sesión:', error);
+        });
+    }
   }
 
   ////////////////// GUARDAR-ACTUALIZAR /////////////////
   const camposRegistro = { nombre:"", edad:"", genero:""};
   const [objeto, setObjeto] = useState(camposRegistro);
-  
-  const handleSubmit = async (e) => {   //Manejar submit 
-    e.preventDefault();
+  const handleSubmit = async (e) => {                 // Manejador de submit
+    e.preventDefault();                               // Evitar accion por defecto
     try {
       if(props.idActual == ""){
-        if(validarForm()){
-          addDoc(collection(db, 'persona'), objeto);
-          toast("Se guardo con éxito...", {type:'success', autoClose:2000 });
-          //console.log("Se registro con éxito...");
+        if(validarForm()){                            // Validación de form
+          addDoc(collection(db, 'persona'), objeto);  // Guardar en BD
+          toast("Se registro con éxito...", { type: 'success' , autoClose: 2000})
         }else{
           console.log("NO se guardo...");
         }
-        setObjeto(camposRegistro);
+        setObjeto(camposRegistro);                    // Borrar objeto
       }else{
-        await updateDoc(doc(collection(db, 'persona'), props.idActual), objeto);
-        props.setIdActual('');
-        toast("Se ACTUALIZO el REGISTRO...", {
-          type:'info',
-          autoClose:2000
-        });
-        //console.log("Se ACTUALIZO el REGISTRO...");
+        await updateDoc(doc(collection(db, "persona"), props.idActual), objeto);
+        props.setIdActual("");                        // Borrar id
+        toast("Se actualizó con éxito...", { type: 'success' , autoClose: 2000})
       }
     } catch (error) {
-      console.log("Error en Crear o actualizar", error);
+      toast("ERROR en crear o actualizar...", { type: 'error' , autoClose: 2000})
     }
   }
 
   const validarForm = () => {
     if(objeto.nombre === "" || /^\s+$/.test(objeto.nombre)){
-      toast("Escriba nombre...", {type:'warning', autoClose:2000});
-      //alert("Escriba nombre...");
+      toast("Escriba un nombre...", { type: 'error' , autoClose: 2000})
       return false;
     }
-    if(objeto.edad === "" || /^\s+$/.test(objeto.edad)){
-      toast("Escriba EDAD...", {type:'warning', autoClose:2000});
-      //alert("Escriba EDAD...");
+    if(objeto.edad==="" || /^\s+$/.test(objeto.edad)){
+      toast("Escriba una edad...", { type: 'error' , autoClose: 2000})
       return false;
     }
-    if(objeto.genero === "" || /^\s+$/.test(objeto.genero)){
-      toast("Seleccione género...", {type:'warning', autoClose:2000});
-      //alert("Seleccione género...");
+
+    if(objeto.genero==="" || /^\s+$/.test(objeto.genero)){
+      toast("Seleccione un género...", { type: 'error' , autoClose: 2000})
       return false;
     }
-    
     return true;
   };
 
-  ////////////// Objetener registro por id //////////////
-  useEffect(()=>{
-    if(props.idActual ===""){
-      setObjeto({...camposRegistro})
+  ////////////// Obtener registro por id //////////////
+  useEffect(()=>{ 
+    if(props.idActual === ""){
+      setObjeto({...camposRegistro});
     }else{
       obtenerDatosPorId(props.idActual);
     }
   }, [props.idActual]);
 
+
   const obtenerDatosPorId = async (xId) => {
-    //Console.log("xId: ", xId);
-    const objPorId = doc(db, "persona", xId);
-    const docPorId = await getDoc(objPorId);
+    const objPorId = doc(db, "persona", xId);   // Objeto por id
+    const docPorId = await getDoc(objPorId);    // Documento por id
     if(docPorId.exists()){
-      //console.log("Datos de doc...", docPorId.data());
-      setObjeto(docPorId.data());
+      setObjeto(docPorId.data());               // Pasar 
     }else{
       console.log("No hay doc");
     }
   }
-
-  const navigate = useNavigate(); // Usa useNavigate para navegación
-  const handleCerrarApp = () => {
-    // Maneja el cierre de sesión
-    signOut(auth);
-    navigate('/home'); // Redirige a ...
-  };
-  //console.log(objeto);
-//style={{ background:"orange", padding:"10px" }}
+  
   return (
-    <div>
-      
-      <form className='card card-body' onSubmit={handleSubmit}>
+    <div style={{ background:"greenyellow", padding:"10px" }}>
+      <form onSubmit={handleSubmit} >
+        <button onClick={handleSignOut}> Cerrar aplicación</button>
 
-        <div className='col-md-12'>
-          <button onClick={handleCerrarApp} className='input-group-text bd-light' >
-            Cerrar aplicación
-          </button>
-        </div>
+        <h2>AppForm.js (Teresa)</h2>
+        <ToastContainer/>
 
-        <button className='btn btn-primary btn-block'>
-          Registrar clientes (AppForm.js)
-        </button>
-
-        <div className='form-group input-group'>
-          <div className='input-group-text bd-light'>
-            <i className='material-icons'>group_add</i>
-          </div>
-          <input className='form-control float-start' type='text' placeholder='Nombres...'  
-            onChange={handleStatusChange} value={objeto.nombre} name='nombre' />
-        </div>
+        <input onChange={handleStatusChange} value={objeto.nombre}
+          name='nombre' type='text' placeholder='Nombres...' /> <br/>
         
-        <div className='form-group input-group'>
-          <div className='input-group-text bd-light'>
-            <i className='material-icons'>star_half</i>
-          </div>
-          <input className='form-control float-start' type='text' placeholder='Edad...'  
-            onChange={handleStatusChange} value={objeto.edad} name='edad' />
-        </div>
-
-        <div className='form-group input-group'>
-          <div className='input-group-text bd-light'>
-            <i className='material-icons'>insert_link</i>
-          </div>
-          <select className='form-control float-start' name='genero'
-            onChange={handleStatusChange} value={objeto.genero} >
-            <option value="">Seleccione...</option>
-            <option value="Masculino">Masculino</option>
-            <option value="Femenino">Femenino</option>
-          </select>
-        </div>
-          
-        <button className='btn btn-primary btn-block'>
-          {props.idActual=='' ? "Guardar": "Actualizar"}
-        </button>
+        <input onChange={handleStatusChange} value={objeto.edad}
+          name='edad' type='text' placeholder='Edad...' /> <br/>
         
+        <select onChange={handleStatusChange} value={objeto.genero} name='genero'>
+          <option value="">Seleccione género...</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select> <br/>
+        
+        <button>
+          {props.idActual=="" ? "Guardar": "Actualizar" }
+        </button>
+        <br></br>
+        <i class="large material-icons">insert_chart</i>
       </form>
     </div>
   )
 }
 
 export default AppForm;
+
+/*
+
+import React, { useEffect, useState } from 'react';
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../conexion/firebase";
+
+const AppForm = (props) => {
+ 
+  ////////////////// MANEJAR INGRESO DE DATOS ///////////
+  const handleStatusChange = (e) => {
+    const {name, value} = e.target;       // Lectura a <input>
+    setObjeto({...objeto, [name]:value}); // Pasando name y value
+    //console.log({name, value});
+    //console.log(objeto);
+  }
+
+  ////////////////// GUARDAR-ACTUALIZAR /////////////////
+  const camposRegistro = { nombre:"", edad:"", genero:""};
+  const [objeto, setObjeto] = useState(camposRegistro);
+
+  const validarForm = () => {
+    if(objeto.nombre === "" || /^\s+$/.test(objeto.nombre)){
+      alert("Escriba nombre...");
+      return false;
+    }
+    return true;
+  };
+
+  ////////////// Obtener registro por id //////////////
+  
+
+  //style={{ background:"orange", padding:"10px" }}
+  return (
+    <div style={{ background:"orange", padding:"10px" }}>
+      <form >
+        <button>Cerrar aplicación</button>
+
+        <h2>Registrar (AppForm.js)</h2>
+
+        <input 
+          name='nombre' type='text' placeholder='Nombres...' /> <br/>
+        
+        <input
+          name='edad' type='text' placeholder='Edad...' /> <br/>
+        
+        <select >
+          <option value="">Seleccione género...</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select> <br/>
+        
+        <button>
+          {props.idActual=="" ? "Guardar": "Actualizar" }
+        </button>
+      </form>
+    </div>
+  )
+}
+
+export default AppForm;
+*/
